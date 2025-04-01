@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Miracle ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-scale: calc(1vw + 1vh);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glitter {
+            position: absolute;
+            width: clamp(8px, 1.5vw, 12px);
+            height: clamp(8px, 1.5vw, 12px);
+            background: radial-gradient(circle, #fff 0%, var(--glitter-color) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: drop-shadow(0 0 5px currentColor);
+            z-index: 20;
+        }
+        
+        .heart-beat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .magazine-pop {
+            transform: scale(0) rotate(-15deg);
+            opacity: 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: clamp(4px, 1vw, 8px) solid white;
+            z-index: 30;
+        }
+        
+        .bg-blur {
+            backdrop-filter: blur(10px);
+        }
+        
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+        
+        .responsive-text {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+        }
+        
+        .responsive-subtext {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+        }
+        
+        .responsive-button {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem);
+        }
+        
+        .content-wrapper {
+            width: min(90%, 800px);
+            margin: 0 auto;
+            padding: clamp(1rem, 5vh, 3rem) 0;
+        }
+
+        @media (min-width: 768px) {
+            .content-wrapper {
+                padding: clamp(.75rem, 3vh, 2rem) 0;
+            }
+            .responsive-button{
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen relative overflow-hidden">
+    <!-- Floating Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="floating-circle top-[20%] left-[15%] w-[80px] h-[80px] bg-pink-300/40" style="animation-delay: 0s;"></div>
+        <div class="floating-circle top-[40%] right-[20%] w-[100px] h-[100px] bg-purple-300/40" style="animation-delay: -1.5s;"></div>
+        <div class="floating-circle bottom-[30%] right-[15%] w-[90px] h-[90px] bg-blue-300/40" style="animation-delay: -2.5s;"></div>
+        <div class="floating-circle bottom-[25%] left-[20%] w-[120px] h-[120px] bg-pink-300/40" style="animation-delay: -3.5s;"></div>
+    </div>
+
+    <!-- Name Input Modal -->
+    <div id="name-popup" class="fixed inset-0 bg-black/60 flex items-center justify-center z-20">
+        <div class="bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.15)] w-[90%] max-w-[400px] p-6 md:p-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
+                Welcome! <span class="text-pink-500">🌟</span>
+            </h2>
+            <input 
+                type="text" 
+                id="visitor-name" 
+                class="w-full px-4 py-3 text-lg rounded-xl border-2 border-gray-200 
+                       focus:border-pink-500 focus:ring-2 focus:ring-pink-200 
+                       transition-all duration-200 outline-none text-gray-700 
+                       placeholder:text-gray-400"
+                placeholder="Enter your name..."
+            >
+            <button 
+                id="submit-name" 
+                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-600 
+                       text-white py-4 rounded-xl font-semibold text-lg
+                       transition-all duration-200 hover:shadow-lg 
+                       hover:from-pink-600 hover:to-purple-700 
+                       active:transform active:scale-[0.98]">
+                Continue ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- Initial Content -->
+    <div id="initial-content" class="fixed inset-0 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white/95 bg-blur rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-2 border-white/50 transform transition-all duration-300 hover:scale-[1.02] max-w-xl w-full">
+                <h1 class="responsive-text font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-purple-600 mb-8 text-center">
+                    Hey <span class="display-name"></span>! <span class="heart-beat inline-block">💖</span>
+                </h1>
+                <p class="responsive-subtext text-purple-700 mb-10 leading-relaxed text-center">
+                    Someone has a <span class="font-bold text-pink-600">special surprise</span> just for you...
+                </p>
+                <button id="reveal-btn" class="group relative w-full max-w-md mx-auto block transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="relative flex items-center justify-center space-x-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl py-4 px-8 hover:from-pink-600 hover:to-purple-700 transition-all duration-300">
+                        <span class="responsive-button text-white font-semibold tracking-wide">
+                            Reveal Message
+                        </span>
+                        <span class="text-2xl group-hover:animate-bounce">✨</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Surprise Content -->
+    <div id="surprise-content" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-2 sm:p-4 z-50">
+        <div class="content-wrapper w-full max-w-md mx-auto">
+            <div class="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] relative">
+                <!-- Back Arrow -->
+                <button id="reset-btn" class="absolute top-3 sm:top-6 left-3 sm:left-6 w-8 h-8 sm:w-12 sm:h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 transform hover:scale-105 z-10 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-6 sm:w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
+
+                <div class="p-4 sm:p-6 md:p-8 text-center">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6">
+                        APRIL FOOL! <span class="inline-block animate-bounce">🤪</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-700 mb-4 sm:mb-6">Brother <span class="display-name"></span>! <span class="heart-beat inline-block">💖</span>, gotcha! 😝</p>
+                    
+                    <div id="surprise-image" class="magazine-pop mb-4 w-[80%] max-w-[300px] mx-auto">
+                        <img src="https://media.giphy.com/media/10JhviFuU2gWD6/giphy.gif" 
+                             alt="Funny Cat" 
+                             class="rounded-xl sm:rounded-2xl w-full shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submit-name').addEventListener('click', () => {
+            const name = document.getElementById('visitor-name').value;
+            if (name.trim()) {
+                document.querySelectorAll('.display-name').forEach(el => el.textContent = name);
+                document.getElementById('name-popup').classList.add('hidden');
+                document.getElementById('initial-content').classList.remove('hidden');
+                gsap.from('#initial-content', {
+                    opacity: 0,
+                    scale: 0.95,
+                    duration: 0.8,
+                    ease: "back.out(1.7)"
+                });
+            }
+        });
+    </script>
+
+
+    <!-- Audio Element -->
+    <audio id="prank-audio" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+    <script>
+        // Enhanced glitter creation with color variations
+        function createGlitter(x, y) {
+            const colors = ['#ff69b4', '#ff9ff3', '#feca57', '#ff9ff3', '#48dbfb', '#1dd1a1'];
+            const glitter = document.createElement('div');
+            glitter.className = 'glitter';
+            glitter.style.setProperty('--glitter-color', colors[Math.floor(Math.random() * colors.length)]);
+            document.body.appendChild(glitter);
+
+            gsap.fromTo(glitter, 
+                {
+                    x: x - 6,
+                    y: y - 6,
+                    scale: 0.5 + Math.random(),
+                    opacity: 1,
+                    rotation: Math.random() * 360
+                },
+                {
+                    duration: 1 + Math.random() * 2,
+                    x: x + (Math.random() - 0.5) * 300,
+                    y: y - 100 - Math.random() * 400,
+                    scale: 0,
+                    opacity: 0,
+                    rotation: Math.random() * 360,
+                    ease: "power2.out",
+                    onComplete: () => glitter.remove()
+                }
+            );
+        }
+
+        // Main reveal function
+        function revealSurprise() {
+            const revealBtn = document.getElementById('reveal-btn');
+            const initialContent = document.getElementById('initial-content');
+            const surpriseContent = document.getElementById('surprise-content');
+            const audio = document.getElementById('prank-audio');
+            const surpriseImage = document.getElementById('surprise-image');
+            const resetBtn = document.getElementById('reset-btn');
+
+            // Create initial floating particles
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createGlitter(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 300);
+            }
+
+            revealBtn.addEventListener('click', () => {
+                // Play audio
+                audio.play();
+                
+                // Hide initial content with animation
+                gsap.to(initialContent, {
+                    scale: 0.9,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "back.in(2)",
+                    onComplete: () => {
+                        initialContent.classList.add('hidden');
+                        surpriseContent.classList.remove('hidden');
+                        
+                        // Create glitter explosion
+                        for(let i = 0; i < 80; i++) {
+                            setTimeout(() => {
+                                createGlitter(
+                                    window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+                                    window.innerHeight / 2 + (Math.random() - 0.5) * 200
+                                );
+                            }, i * 20);
+                        }
+                        
+                        // Animate surprise content
+                        gsap.to(surpriseImage, {
+                            duration: 1.2,
+                            scale: 1,
+                            opacity: 1,
+                            rotation: 0,
+                            ease: "elastic.out(1, 0.5)",
+                            delay: 0.3
+                        });
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', () => {
+                // Hide surprise content
+                gsap.to(surpriseContent, {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => {
+                        surpriseContent.classList.add('hidden');
+                        // Reset initial content
+                        gsap.fromTo(initialContent, 
+                            { scale: 0.9, opacity: 0 },
+                            { 
+                                scale: 1, 
+                                opacity: 1, 
+                                duration: 0.8,
+                                ease: "elastic.out(1, 0.5)" 
+                            }
+                        );
+                        initialContent.classList.remove('hidden');
+                    }
+                });
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', revealSurprise);
+
+        // Wiggle animation for the emoji
+        gsap.registerEffect({
+            name: "wiggle",
+            effect: (targets, config) => {
+                return gsap.to(targets, {
+                    duration: 0.5,
+                    rotation: 10,
+                    yoyo: true,
+                    repeat: -1,
+                    ease: "sine.inOut"
+                });
+            }
+        });
+    </script>
+</body>
+</html>
